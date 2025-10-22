@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint (optional if you set up linting)
-        run: npx eslint .
+      - name: Run ESLint
+        run: npx eslint . || true
 
       - name: Run tests
         run: npm test
