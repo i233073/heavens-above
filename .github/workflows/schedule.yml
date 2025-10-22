@@ -1,0 +1,44 @@
+name: weekly Data Scraper
+
+on:
+  schedule:
+    # Runs every day at midnight (UTC)
+    - cron: "0 0 * * 0"
+
+  workflow_dispatch:  # optional — lets you run it manually too
+    inputs:
+      reason:
+        description: "Reason for manual run"
+        required: false
+        default: "Manual trigger"
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run scraper
+        run: node run.js
+
+      - name: Save log file
+        run: |
+          mkdir -p logs
+          echo "Run completed at $(date)" > logs/last_run.txt
+          echo "Scraper finished successfully" >> logs/last_run.txt
+
+      - name: Upload logs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-logs
+          path: logs/last_run.txt
