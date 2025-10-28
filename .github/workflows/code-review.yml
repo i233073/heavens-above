@@ -1,0 +1,52 @@
+name: Code Review Checks
+
+# Trigger when someone opens or updates a Pull Request to main
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # allows manual run
+
+jobs:
+  review:
+    name: Run Code Review Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      # 1️ Lint check
+      - name: Run ESLint for code style
+        run: npx eslint . || true
+
+      # 2️ Security check
+      - name: Run npm audit for vulnerabilities
+        run: npm audit --audit-level=high || true
+
+      # 3️ Optional: Advanced code analysis using CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+        continue-on-error: true
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        continue-on-error: true
+
+      # 4️Upload results as artifacts (optional)
+      - name: Upload ESLint Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-report
+          path: .
+
