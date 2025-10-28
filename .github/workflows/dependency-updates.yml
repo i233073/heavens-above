@@ -1,0 +1,38 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Every Monday at 3 AM UTC
+  workflow_dispatch:  # Allow manual run
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm-check-updates
+        run: npm install -g npm-check-updates
+
+      - name: Check for outdated dependencies
+        run: ncu
+
+      - name: Upgrade dependencies
+        run: |
+          ncu -u
+          npm install
+
+      - name: Commit updated dependencies
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: automated dependency updates" || echo "No updates"
+          git push
