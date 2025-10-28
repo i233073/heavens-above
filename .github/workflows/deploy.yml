@@ -1,4 +1,4 @@
-name: again deployment through Vercel
+name: deployment through Vercel
 
 on:
   push:
