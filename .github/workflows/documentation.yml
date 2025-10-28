@@ -1,0 +1,43 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:  # allows manual trigger
+
+permissions:
+  contents: write  # needed to push to gh-pages
+
+jobs:
+  deploy-docs:
+    name: Build and Deploy Docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Install a static site generator (optional)
+      - name: Install Docsify
+        run: npm install -g docsify-cli
+
+      - name: Build documentation
+        run: |
+          mkdir dist
+          cp -r docs/* dist/
+          echo "<meta http-equiv='refresh' content='0; url=index.html'>" > dist/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
