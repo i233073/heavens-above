@@ -1,0 +1,30 @@
+name: Custom Workflow - Release Notes Generator
+
+on:
+  push:
+    tags:
+      - 'v*'   # Runs whenever you push a tag like v1.0 or v2.1
+  workflow_dispatch:  # Also allows manual triggering
+
+jobs:
+  generate-release-notes:
+    runs-on: ubuntu-latest
+    name: Generate and Upload Release Notes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate release notes
+        id: notes
+        uses: release-drafter/release-drafter@v6
+        with:
+          config-name: release-drafter.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release notes artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: ./release-drafter.yml
