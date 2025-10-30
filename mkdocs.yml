@@ -8,13 +8,12 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   features:
-    - navigation.instant       # Faster page transitions
-    - navigation.tabs           # Tabs for top-level sections
-    - navigation.sections       # Sidebar sections
-    - toc.integrate             # Table of contents inside the sidebar
-    - content.code.copy         # Copy button on code blocks
-    - content.action.edit       # “Edit this page” button
-    - content.tabs.link         # Link between tabbed code blocks
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - content.code.copy
+    - content.action.edit
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -33,19 +32,11 @@ nav:
   - CI Workflow: ci-workflow.md
   - Code Review: code-review.md
   - Deployment: deployment.md
-  - About:
-      - Overview: about.md
-      - Credits: credits.md
 
 plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
-  - tags
-  - mkdocs-simple-hooks:
-      hooks:
-        on_pre_build: |
-          print("Building Heavens Above documentation...")
 
 markdown_extensions:
   - admonition
@@ -56,7 +47,6 @@ markdown_extensions:
   - def_list
   - attr_list
   - tables
-  - tasklist
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.inlinehilite
