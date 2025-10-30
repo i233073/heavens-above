@@ -3,8 +3,8 @@ name: Custom Workflow - Release Notes Generator
 on:
   push:
     tags:
-      - 'v*'   # Runs whenever you push a tag like v1.0 or v2.1
-  workflow_dispatch:  # Also allows manual triggering
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   generate-release-notes:
@@ -19,12 +19,15 @@ jobs:
         id: notes
         uses: release-drafter/release-drafter@v6
         with:
-          config-name: .github/release-drafter.yml
+          config-name: release-drafter.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save generated notes
+        run: echo "${{ steps.notes.outputs.body }}" > release-notes.md
 
       - name: Upload release notes artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-notes
-          path: .github/release-drafter.yml
+          path: release-notes.md
