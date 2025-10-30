@@ -1,54 +1,11 @@
 site_name: Heavens Above Project Docs
-site_description: Documentation for the Heavens Above automation and deployment project.
-site_author: Amna I233073
-repo_url: https://github.com/i233073/heavens-above
-repo_name: i233073/heavens-above
-edit_uri: edit/main/docs/
-
 theme:
   name: material
-  features:
-    - navigation.instant
-    - navigation.tabs
-    - navigation.sections
-    - toc.integrate
-    - content.code.copy
-    - content.action.edit
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: blue
-      accent: indigo
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: indigo
-      accent: blue
-  icon:
-    repo: fontawesome/brands/github
 
 nav:
   - Home: index.md
   - Usage: usage.md
   - CI Workflow: ci-workflow.md
-  - Code Review: code-review.md
-  - Deployment: deployment.md
 
 plugins:
   - search
-  - git-revision-date-localized:
-      fallback_to_build_date: true
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - toc:
-      permalink: true
-  - def_list
-  - attr_list
-  - tables
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - pymdownx.tabbed:
-      alternate_style: true
