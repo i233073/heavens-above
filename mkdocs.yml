@@ -1,0 +1,13 @@
+site_name: Heavens Above Project Docs
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - CI Workflow: ci-workflow.md
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
