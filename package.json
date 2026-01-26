@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "cheerio": "^1.1.2",
+    "cheerio": "^1.2.0",
     "request": "^2.88.2"
   },
   "repository": {
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
-    "globals": "^17.0.0",
+    "globals": "^17.1.0",
     "jest": "^30.2.0"
   }
 }
